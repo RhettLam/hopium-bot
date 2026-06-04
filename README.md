@@ -28,3 +28,4 @@ npm run dev
 ## 🧠 Core Logic
 - **Serious Mode**: Real-world stock search \u2192 Professional reassurance.
 - **Toxic Mode**: Absurd request detection \u2192 Fake funny jobs \u2192 Sarcastic roasting.
+ 
