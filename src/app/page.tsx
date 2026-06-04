@@ -25,7 +25,6 @@ export default function HopiumBot() {
     setIsTyping(true);
 
     try {
-      // Format history for the API
       const history = messages.map(msg => ({
         role: msg.role === 'user' ? 'user' : 'assistant',
         content: msg.content
@@ -63,86 +62,86 @@ export default function HopiumBot() {
       }
     } catch (error) {
       console.error('Error:', error);
-      setMessages(prev => [...prev, { role: 'bot', content: '哎呀，出错了，可能主力在干扰我的信号...' }]);
+      setMessages(prev => [...prev, { role: 'bot', content: '哎呀，出错了，可能主力在干扰我的信号...🤦‍♂️' }]);
     } finally {
       setIsTyping(false);
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
   return (
-    <div className="flex flex-col h-screen bg-zinc-950 text-zinc-200 font-sans">
-      {/* Header */}
-      <header className="p-4 border-b border-zinc-800 bg-zinc-900/50 backdrop-blur-md sticky top-0 z-10">
-        <div className="max-w-2xl mx-auto flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-tr from-yellow-400 to-orange-600 rounded-full flex items-center justify-center text-2xl shadow-lg shadow-orange-500/20">
-            💊
-          </div>
-          <div>
-            <h1 className="text-lg font-bold text-white">Hopium Bot</h1>
-            <p className="text-xs text-zinc-400">你的股票情绪按摩大师</p>
-          </div>
-        </div>
+    <div className="flex flex-col h-[100dvh] bg-slate-950 text-slate-100 font-sans">
+      {/* 顶部导航栏 */}
+      <header className="p-4 bg-slate-900 border-b border-slate-800 flex items-center justify-center shrink-0 z-10 shadow-sm">
+        <h1 className="text-xl font-bold text-amber-500 tracking-wide">💊 Hopium Bot</h1>
       </header>
 
-      {/* Chat Area */}
-      <main className="flex-1 overflow-y-auto p-4">
-        <div className="max-w-2xl mx-auto space-y-6">
-          {messages.length === 0 && (
-            <div className="text-center py-20 space-y-4">
-              <div className="text-5xl mb-4">📉</div>
-              <h2 className="text-xl font-medium text-zinc-400">感觉被割了？还是卖飞了？</h2>
-              <p className="text-zinc-500 text-sm max-w-xs mx-auto">
-                告诉我你的股票代码和现状，我来帮你找回自信。
-              </p>
-            </div>
-          )}
-          {messages.map((msg, i) => (
-            <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[85%] p-3 rounded-2xl ${
-                msg.role === 'user' 
-                ? 'bg-orange-600 text-white rounded-tr-none' 
-                : 'bg-zinc-800 text-zinc-200 rounded-tl-none border border-zinc-700'
-              }`}>
-                <div className="whitespace-pre-wrap leading-relaxed text-sm">
-                  {msg.content}
-                </div>
+      {/* 聊天消息区 */}
+      <main className="flex-1 overflow-y-auto p-4 w-full max-w-3xl mx-auto space-y-6">
+        {messages.length === 0 && (
+          <div className="text-center py-20 space-y-4">
+            <div className="text-5xl mb-4">📉</div>
+            <h2 className="text-xl font-medium text-slate-400">感觉被割了？还是卖飞了？</h2>
+            <p className="text-slate-500 text-sm max-w-xs mx-auto">
+              告诉我你的股票代码和现状，我来帮你找回自信。
+            </p>
+          </div>
+        )}
+        {messages.map((msg, i) => (
+          <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div className={`max-w-[85%] sm:max-w-[75%] px-5 py-3 rounded-2xl shadow-md text-sm md:text-base leading-relaxed ${
+              msg.role === 'user' 
+              ? 'bg-blue-600 text-white rounded-tr-sm' 
+              : 'bg-slate-800 text-slate-100 rounded-tl-sm border border-slate-700'
+            }`}>
+              <div className="whitespace-pre-wrap">
+                {msg.content}
               </div>
             </div>
-          ))}
-          {isTyping && (
-            <div className="flex justify-start">
-              <div className="bg-zinc-800 p-3 rounded-2xl rounded-tl-none border border-zinc-700">
-                <div className="flex gap-1">
-                  <div className="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                  <div className="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                </div>
+          </div>
+        ))}
+        {isTyping && (
+          <div className="flex justify-start">
+            <div className="bg-slate-800 p-3 rounded-2xl rounded-tl-sm border border-slate-700">
+              <div className="flex gap-1">
+                <div className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                <div className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                <div className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
               </div>
             </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
+          </div>
+        )}
+        <div ref={messagesEndRef} />
       </main>
 
-      {/* Input Area */}
-      <footer className="p-4 bg-zinc-900/80 backdrop-blur-md border-t border-zinc-800">
-        <div className="max-w-2xl mx-auto flex gap-2">
-          <input
-            type="text"
+      {/* 底部输入框 */}
+      <footer className="p-4 bg-slate-900 border-t border-slate-800 shrink-0 pb-safe">
+        <form 
+          className="max-w-3xl mx-auto flex gap-3 items-end"
+          onSubmit={(e) => { e.preventDefault(); sendMessage(); }}
+        >
+          <textarea 
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-            placeholder="例如：持有 600519 跌惨了，求安慰..."
-            className="flex-1 bg-zinc-800 border border-zinc-700 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 text-zinc-200 placeholder-zinc-500"
+            onKeyDown={handleKeyDown}
+            placeholder="输入你的持仓和烦恼..." 
+            rows="1"
+            className="flex-1 bg-slate-800 border border-slate-700 rounded-2xl px-4 py-3 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-slate-100 resize-none min-h-[50px] max-h-[120px] text-sm md:text-base"
           />
-          <button
-            onClick={sendMessage}
+          <button 
+            type="submit"
             disabled={isTyping || !input.trim()}
-            className="bg-orange-600 hover:bg-orange-500 disabled:bg-zinc-700 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors"
+            className="bg-amber-500 hover:bg-amber-600 disabled:bg-slate-700 text-slate-950 font-bold rounded-2xl px-5 py-3 h-[50px] transition-colors flex items-center justify-center shrink-0 text-sm md:text-base"
           >
             发送
           </button>
-        </div>
+        </form>
       </footer>
     </div>
   );
