@@ -131,7 +131,7 @@ export default function HopiumBot() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="输入你的持仓和烦恼..." 
-            rows="1"
+            rows={1}
             className="flex-1 bg-slate-800 border border-slate-700 rounded-2xl px-4 py-3 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-slate-100 resize-none min-h-[50px] max-h-[120px] text-sm md:text-base"
           />
           <button 
